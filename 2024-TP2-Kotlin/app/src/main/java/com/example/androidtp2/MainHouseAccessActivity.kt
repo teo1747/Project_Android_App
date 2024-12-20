@@ -2,15 +2,14 @@ package com.example.androidtp2
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 class MainHouseAccessActivity : AppCompatActivity() {
 
-    private val usersWithAccess: ArrayList<UserData> = ArrayList() // Store users with access as User objects
-    private var houseId: Int = -1 // Placeholder for house ID
-    private var token: String = "" // Token for authentication
+    private var houseId: Int = -1
+    private var token: String = ""
+    private val usersWithAccess = mutableListOf<UserData>() // Store users with access
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,37 +19,41 @@ class MainHouseAccessActivity : AppCompatActivity() {
         houseId = intent.getIntExtra("HOUSE_ID", -1)
         token = intent.getStringExtra("TOKEN") ?: ""
 
-        // If no token or invalid houseId, finish the activity
         if (houseId == -1 || token.isEmpty()) {
             Toast.makeText(this, "Erreur : Données manquantes.", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        val usernameEditText = findViewById<EditText>(R.id.usernameEditText)
-        val addUserButton = findViewById<Button>(R.id.addUserButton)
+        val usernameEditText: EditText = findViewById(R.id.usernameEditText)
+        val grantPermissionButton: Button = findViewById(R.id.grantPermissionButton)
+        val removePermissionButton: Button = findViewById(R.id.removePermissionButton)
 
-        // Handle adding a user
-        addUserButton.setOnClickListener {
+        // Grant Permission
+        grantPermissionButton.setOnClickListener {
             val username = usernameEditText.text.toString().trim()
             if (username.isEmpty()) {
                 Toast.makeText(this, "Veuillez entrer un nom d'utilisateur.", Toast.LENGTH_SHORT).show()
             } else {
-                addUserToHouse(username) { success ->
-                    if (success) {
-                        usernameEditText.text.clear()
-                        fetchUsersWithAccess() // Refresh the list after adding a user
-                    }
-                }
+                grantPermission(username)
             }
         }
 
-        // Fetch initial list of users
+        // Remove Permission
+        removePermissionButton.setOnClickListener {
+            val username = usernameEditText.text.toString().trim()
+            if (username.isEmpty()) {
+                Toast.makeText(this, "Veuillez entrer un nom d'utilisateur.", Toast.LENGTH_SHORT).show()
+            } else {
+                revokePermission(username)
+            }
+        }
+
+        // Fetch initial users with access
         fetchUsersWithAccess()
     }
 
-    private fun addUserToHouse(username: String, callback: (Boolean) -> Unit) {
-        // API call to add user access
+    private fun grantPermission(username: String) {
         Api().post(
             path = "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/users",
             data = mapOf("username" to username),
@@ -58,19 +61,34 @@ class MainHouseAccessActivity : AppCompatActivity() {
                 runOnUiThread {
                     if (responseCode == 200) {
                         Toast.makeText(this, "$username a été ajouté avec succès.", Toast.LENGTH_SHORT).show()
-                        callback(true)
+                        fetchUsersWithAccess()
                     } else {
                         Toast.makeText(this, "Erreur : Impossible d'ajouter l'utilisateur.", Toast.LENGTH_SHORT).show()
-                        callback(false)
                     }
                 }
             },
-            securityToken = token // Include the token for authentication
+            securityToken = token
+        )
+    }
+
+    private fun revokePermission(username: String) {
+        Api().delete(
+            path = "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/users/$username",
+            onSuccess = { responseCode ->
+                runOnUiThread {
+                    if (responseCode == 200) {
+                        Toast.makeText(this, "$username n'a plus accès.", Toast.LENGTH_SHORT).show()
+                        fetchUsersWithAccess()
+                    } else {
+                        Toast.makeText(this, "Erreur : Impossible de supprimer l'accès.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            },
+            securityToken = token
         )
     }
 
     private fun fetchUsersWithAccess() {
-        // API call to fetch users
         Api().get<List<UserData>>(
             path = "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/users",
             onSuccess = { responseCode, users ->
@@ -78,7 +96,7 @@ class MainHouseAccessActivity : AppCompatActivity() {
                     if (responseCode == 200 && users != null) {
                         usersWithAccess.clear()
                         usersWithAccess.addAll(users)
-                        displayUsersWithAccess(users)
+                        displayUsersWithAccess()
                     } else {
                         Toast.makeText(this, "Erreur : Impossible de récupérer les utilisateurs.", Toast.LENGTH_SHORT).show()
                     }
@@ -88,50 +106,19 @@ class MainHouseAccessActivity : AppCompatActivity() {
         )
     }
 
-    private fun displayUsersWithAccess(users: List<UserData>) {
-        val usersContainer = findViewById<LinearLayout>(R.id.usersContainer)
-        usersContainer.removeAllViews() // Clear previous views
+    private fun displayUsersWithAccess() {
+        val usersContainer: LinearLayout = findViewById(R.id.usersContainer)
+        usersContainer.removeAllViews()
 
-        users.forEach { user ->
-            val userView = createUserView(user)
+        for (user in usersWithAccess) {
+            val userView = LayoutInflater.from(this).inflate(R.layout.item_user_access, usersContainer, false)
+            val usernameTextView: TextView = userView.findViewById(R.id.usernameTextView)
+            val removeAccessButton: Button = userView.findViewById(R.id.removeAccessButton)
+
+            usernameTextView.text = user.username
+            removeAccessButton.setOnClickListener { revokePermission(user.username) }
+
             usersContainer.addView(userView)
         }
-    }
-
-    private fun createUserView(user: UserData): View {
-        val inflater = LayoutInflater.from(this)
-        val userView = inflater.inflate(R.layout.item_user_access, null)
-
-        val usernameTextView = userView.findViewById<TextView>(R.id.usernameTextView)
-        val removeAccessButton = userView.findViewById<Button>(R.id.removeAccessButton)
-
-        usernameTextView.text = user.username // Use User object's username
-        removeAccessButton.setOnClickListener {
-            removeUserAccess(user) { success ->
-                if (success) fetchUsersWithAccess() // Refresh the list after removing a user
-            }
-        }
-
-        return userView
-    }
-
-    private fun removeUserAccess(userData: UserData, callback: (Boolean) -> Unit) {
-        // API call to remove user access
-        Api().delete(
-            path = "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/users/${userData.id}",
-            onSuccess = { responseCode ->
-                runOnUiThread {
-                    if (responseCode == 200) {
-                        usersWithAccess.remove(userData) // Remove user from local list
-                        Toast.makeText(this, "${userData.username} n'a plus accès.", Toast.LENGTH_SHORT).show()
-                        callback(true)
-                    } else {
-                        Toast.makeText(this, "Erreur : Impossible de supprimer l'accès.", Toast.LENGTH_SHORT).show()
-                        callback(false)
-                    }
-                }
-            },
-            securityToken = token // Include the token for authentication
-        )
     }
 }

@@ -55,7 +55,7 @@ class UpFloorFragment : Fragment() {
         }
 
         // Start RoomDeviceActivity and pass the room name, home ID, and token
-        val intent = Intent(requireContext(), RoomDeviceActivity::class.java).apply {
+        val intent = Intent(requireContext(), UpFloorDeviceActivity::class.java).apply {
             putExtra("ROOM_NAME", roomName)
             putExtra("HOME_ID", homeId)
             putExtra("TOKEN", token)

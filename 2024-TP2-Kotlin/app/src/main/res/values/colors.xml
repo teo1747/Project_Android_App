@@ -7,6 +7,7 @@
     <color name="background">#171E28</color>
     <color name="background_color">#171E28</color>
     <color name="primary_icon_color">#FF000000</color>
-
+    <color name="primary">#FF000000</color>
+    <color name="error">#A52626</color>
     <color name="red">#A52626</color>
 </resources>

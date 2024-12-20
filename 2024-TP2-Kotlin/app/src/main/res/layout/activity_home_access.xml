@@ -1,49 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainHouseAccessActivity">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/background_color">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <!-- Input Field for Username -->
+    <EditText
+        android:id="@+id/usernameEditText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:hint="Enter username"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/input_background" />
 
-        <EditText
-            android:id="@+id/usernameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Nom d'utilisateur"
-            android:inputType="textPersonName"
-            android:padding="8dp"
-            android:layout_marginBottom="16dp" />
+    <!-- Buttons for Granting and Revoking Permission -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <Button
-            android:id="@+id/addUserButton"
-            android:layout_width="match_parent"
+            android:id="@+id/grantPermissionButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ajouter un utilisateur"
-            android:layout_marginBottom="16dp" />
+            android:text="Grant Permission"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/primary" />
 
-        <ScrollView
-            android:id="@+id/usersScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:contentDescription="Liste des utilisateurs avec accès">
-
-            <LinearLayout
-                android:id="@+id/usersContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </ScrollView>
+        <Button
+            android:id="@+id/removePermissionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove Permission"
+            android:backgroundTint="@color/error" />
     </LinearLayout>
 
+    <!-- List of Users with Access -->
+    <TextView
+        android:id="@+id/accessListTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Users with Access"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:contentDescription="List of users with access to the house">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/usersContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Dynamically added user views will go here -->
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
