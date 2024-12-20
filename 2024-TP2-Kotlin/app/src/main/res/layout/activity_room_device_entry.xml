@@ -20,7 +20,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:paddingBottom="16dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <!-- Device Container -->
         <GridLayout
@@ -47,7 +47,7 @@
                     android:id="@+id/garageLightIcon"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/ic_garage_light"
+                    android:src="@drawable/ic_kitchen_light"
                     android:contentDescription="Garage Light"
                      />
 
@@ -108,6 +108,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Close"
+                    android:layout_marginTop="8dp" />
+
+                <Button
+                    android:id="@+id/shutterButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stop"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
 

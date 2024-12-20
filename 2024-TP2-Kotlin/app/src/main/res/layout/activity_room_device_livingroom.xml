@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"
             android:text="Living Room Devices"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:contentDescription="Living Room Light"
-                    android:src="@drawable/ic_livingroom_light"
+                    android:src="@drawable/ic_kitchen_light"
                     />
 
                 <TextView
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Living Room Light"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
                 <Button
                     android:id="@+id/livingRoomLightSwitch"
                     android:layout_width="wrap_content"
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Shutter 1"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/livingshutter1Button"
@@ -110,6 +110,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Close" />
+
+                <Button
+                    android:id="@+id/livingshutter1Button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Stop" />
             </LinearLayout>
 
             <!-- Device 3: Shutter 2 -->
@@ -134,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Shutter 2"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/livingshutter2Button"
@@ -148,6 +155,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Close" />
+
+                <Button
+                    android:id="@+id/livingshutter2Button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Stop" />
             </LinearLayout>
 
         </GridLayout>

@@ -47,7 +47,7 @@
                     android:id="@+id/diningLightIcon"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/ic_light"
+                    android:src="@drawable/ic_kitchen_light"
                     android:contentDescription="Dining Light"
                      />
 
@@ -70,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:text="Off"
                     android:layout_marginTop="8dp" />
+
             </LinearLayout>
 
             <!-- Device 2: Shutter -->
@@ -92,7 +93,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Dining Shutter"
+                    android:text="Dining Shutter 1"
                     android:textColor="@color/white"
                     android:layout_marginTop="8dp" />
 
@@ -107,6 +108,100 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Close"
+                    android:layout_marginTop="8dp" />
+                <Button
+                    android:id="@+id/diningShutterButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stop"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- Device 3: Shutter -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_margin="8dp">
+
+                <ImageView
+                    android:id="@+id/diningShutterIcon1"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_shutter_open"
+                    android:contentDescription="Dining Shutter"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dining Shutter 2"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="8dp" />
+
+                <Button
+                    android:id="@+id/diningShutter1Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Open"
+                    android:layout_marginTop="8dp" />
+                <Button
+                    android:id="@+id/diningShutter1Button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Close"
+                    android:layout_marginTop="8dp" />
+                <Button
+                    android:id="@+id/diningShutter1Button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stop"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- Device 4: Shutter -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_margin="8dp">
+
+                <ImageView
+                    android:id="@+id/diningShutterIcon2"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_shutter_open"
+                    android:contentDescription="Dining Shutter"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dining Shutter 3"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="8dp" />
+
+                <Button
+                    android:id="@+id/diningShutter2Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Open"
+                    android:layout_marginTop="8dp" />
+                <Button
+                    android:id="@+id/diningShutter2Button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Close"
+                    android:layout_marginTop="8dp" />
+                <Button
+                    android:id="@+id/diningShutter2Button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stop"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
 
